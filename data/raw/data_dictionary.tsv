@@ -1,0 +1,10 @@
+Field/Column	Definition	Data type	Allowable values	Notes
+Country	The country (IHR Member State) that completed the costed NAPHS	String	Any IHR member state name	
+Capacity	"The capacity of the JEE to which the cost corresponds (e.g., ""P.8 Immunization"") based on JEE 3.0"	String	"See list in Appendix (""Core capacities"")"	
+Requirement	"The real-world requirement that the cost is intended to support (e.g., ""Strengthen the implementation of national immunization plans to improve coverage"")"	String	Any written description	
+Activity	"The costed action or activity, described at the most granular level available in the costed NAPHS"	String	Any written description	
+Year (1-5)	"The implementation year that the cost is budgeted to occur during (e.g., ""1"")"	Integer	"1, 2, 3, 4, or 5"	
+Year (calendar)	"The calendar year that the cost is budgeted to occur during (e.g., ""2019"")"	Integer	Any calendar year	
+Cost	"The yearly cost for the activity reported on the costed NAPHS (e.g,, ""1000000"")"	Float	Any number	
+Currency (year)	"The currency that the cost is reported in in the costed NAPHS, including the year (e.g., ""USD (2019)"")"	String	Any currency (year)	
+Flag	"Flags with relevant notes about a given data point, e.g., that it was noted as ""no cost"" or that numbers don't sum to totals as reported in PDF documents"	String	Any written description	
