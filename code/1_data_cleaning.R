@@ -7,8 +7,11 @@ library(writexl) ## to save Excel files
 library(dplyr) ## for data manipulation
 
 ###########################################################################
-## Read in raw data #######################################################
+## Read in raw line-item cost data ########################################
 ###########################################################################
+
+## TODO: set up here()
+## TODO: check citations, update, and document core capacity mapping
 
 ## get a list of all the countries in the sheet (one per tab)
 all_countries <- excel_sheets("data/raw/Raw Costed NAPHS data.xlsx")
@@ -24,12 +27,19 @@ for(i in 1:length(all_countries)-1){
 }
 
 ###########################################################################
+## Read in other data sources #############################################
+###########################################################################
+
+## read in core capacity mapping
+core_capacities <- read.csv("data/raw/core_capacity_mapping.csv")
+
+###########################################################################
 ## Restructure and rename variables #######################################
 ###########################################################################
 
 ## rename variables
 names(raw_data)[which(names(raw_data) == "Country")] <- "country"
-names(raw_data)[which(names(raw_data) == "Capacity")] <- "capacity"
+names(raw_data)[which(names(raw_data) == "Capacity")] <- "capacity_original"
 names(raw_data)[which(names(raw_data) == "Requirement")] <- "requirement_raw"
 names(raw_data)[which(names(raw_data) == "Action")] <- "action_raw"
 names(raw_data)[which(names(raw_data) == "Year (1-5)")] <- "year_numeric"
@@ -50,12 +60,34 @@ raw_data$action <- gsub("\n", " ", raw_data$action_raw)
 raw_data$cost <- gsub(",", "", raw_data$cost_raw)
 
 ###########################################################################
+## Merge datasets to include common core capacity mapping #################
+###########################################################################
+
+updated_raw_data <- raw_data |>
+  left_join(core_capacities,
+            by = join_by(capacity_original == core_capacity_original))
+
+###########################################################################
+## Convert to common currency #############################################
+###########################################################################
+
+## TODO: figure out currency conversion
+
+###########################################################################
 ## Export clean dataset ###################################################
 ###########################################################################
 
 ## TODO: I would prefer this to be open-source, though I suspect
 ## Excel may be easier for some users. Also save duplicate pipe-delimited file?
 
-write_xlsx(raw_data[, c(1,2,10,11,5,6,12,8,9)], 
+write_xlsx(updated_raw_data[, c(1,13,14,2,10,11,5,6,12,8,9)], 
            path = "data/clean/Clean Costed NAPHS data.xlsx", 
            col_names = TRUE, format_headers = FALSE)
+
+###########################################################################
+## Remove data from working environment ###################################
+###########################################################################
+
+## remove all items in the working environment
+rm(list = ls())
+
