@@ -1,0 +1,12 @@
+Field name (label)	Field name (data)	Definition	Data type	Allowable values	Notes
+Country	country	The country (IHR Member State) that completed the costed NAPHS	String	Any IHR member state name	
+Pillar	pillar	"The JEE pillar to which the capacity, requirement, activity, and cost correspond"	String	"""Prevent"", ""Detect,"" ""Respond"", or ""Other"""	
+Capacity (standardized)	core_capacity_mapped	"A standardized (or ""mapped"") core capacity specified by the research team to align results across different JEE versions with different capacities"		Any allowable mapping	See additional documentation for mapping
+Capacity (original)	capacity_original	"The capacity of the JEE to which the cost corresponds (e.g., ""P.8 Immunization"") as specified in the published costing document (from various JEE documents)"	String	Any core capacity from any JEE	
+Requirement	requirement	"The real-world requirement that the cost is intended to support (e.g., ""Strengthen the implementation of national immunization plans to improve coverage"")"	String	Any written description	
+Action	action	"The costed action or activity, described at the most granular level available in the costed NAPHS"	String	Any written description	
+Year (1-5)	year_numeric	"The implementation year that the cost is budgeted to occur during (e.g., ""1"")"	Integer	"1, 2, 3, 4, or 5"	
+Year (calendar)	year_calendar	"The calendar year that the cost is budgeted to occur during (e.g., ""2019"")"	Integer	Any calendar year	
+Cost	cost	"The yearly cost for the activity reported on the costed NAPHS (e.g,, ""1000000"")"	Float	Any number	
+Currency (year)	currency	"The currency that the cost is reported in in the costed NAPHS, including the year (e.g., ""USD (2019)"")"	String	Any currency (year)	
+Flag	flag	"Flags with relevant notes about a given data point, e.g., that it was noted as ""no cost"" or that numbers don't sum to totals as reported in PDF documents"	String	Any written description	
