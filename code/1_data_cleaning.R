@@ -68,7 +68,8 @@ raw_data$requirement <- gsub("\n", " ", raw_data$requirement_original)
 raw_data$activity <- gsub("\n", " ", raw_data$activity_original)
 
 ## remove any commas from cost field
-raw_data$cost_original <- gsub(",", "", raw_data$cost_original_raw)
+## supress warnings about NAs, those are expected
+raw_data$cost_original <- suppressWarnings(as.numeric(gsub(",", "", raw_data$cost_original_raw)))
 
 ###########################################################################
 ## Merge datasets to include common core capacity mapping #################
@@ -78,7 +79,7 @@ raw_data$cost_original <- gsub(",", "", raw_data$cost_original_raw)
 updated_raw_data <- raw_data |>
   left_join(core_capacities, by = join_by(capacity_original == core_capacity_original)) |>
   left_join(currency_conversions, by = join_by(currency_original == currency_original)) |>
-  mutate(cost_usd2024 = as.numeric(cost_original)*currency_multiplier)
+  mutate(cost_usd2024 = cost_original*currency_multiplier)
 
 ###########################################################################
 ## Export clean dataset ###################################################
