@@ -3,7 +3,7 @@
 ###########################################################################
 
 ## if you don't already have these installed, you'll need to install them
-## using the command install.libraries()
+## using the command install.packages()
 
 library(readxl) ## to read in Excel files
 library(writexl) ## to save Excel files
@@ -26,10 +26,10 @@ all_countries <- excel_sheets(here("data", "raw", "Raw Costed NAPHS data.xlsx"))
 ## read in data for all countries and append into a data frame
 ## note, by design last tab is excluded as it's the data dictionary
 for(i in 1:length(all_countries)-1){
-  if (i == 1){ raw_data <- read_excel("data/raw/Raw Costed NAPHS data.xlsx", sheet = all_countries[i]) }
+  if (i == 1){ raw_data <- read_excel(here("data", "raw", "Raw Costed NAPHS data.xlsx"), sheet = all_countries[i]) }
   if (i >  1){ raw_data <- rbind.data.frame(
                               raw_data,
-                              read_excel("data/raw/Raw Costed NAPHS data.xlsx", sheet = all_countries[i]))
+                              read_excel(here("data", "raw", "Raw Costed NAPHS data.xlsx"), sheet = all_countries[i]))
                               }
 }
 
@@ -55,7 +55,7 @@ names(raw_data)[which(names(raw_data) == "Requirement")] <- "requirement_origina
 names(raw_data)[which(names(raw_data) == "Activity")] <- "activity_original"
 names(raw_data)[which(names(raw_data) == "Year (1-5)")] <- "year_numeric"
 names(raw_data)[which(names(raw_data) == "Year (calendar)")] <- "year_calendar"
-names(raw_data)[which(names(raw_data) == "Cost")] <- "cost_original_raw"
+names(raw_data)[which(names(raw_data) == "Cost")] <- "cost_original"
 names(raw_data)[which(names(raw_data) == "Currency (year)")] <- "currency_original"
 names(raw_data)[which(names(raw_data) == "Flag")] <- "flag"
 
@@ -69,7 +69,7 @@ raw_data$activity <- gsub("\n", " ", raw_data$activity_original)
 
 ## remove any commas from cost field
 ## supress warnings about NAs, those are expected
-raw_data$cost_original <- suppressWarnings(as.numeric(gsub(",", "", raw_data$cost_original_raw)))
+raw_data$cost_original_numeric <- suppressWarnings(as.numeric(gsub(",", "", raw_data$cost_original)))
 
 ###########################################################################
 ## Merge datasets to include common core capacity mapping #################
@@ -79,7 +79,14 @@ raw_data$cost_original <- suppressWarnings(as.numeric(gsub(",", "", raw_data$cos
 updated_raw_data <- raw_data |>
   left_join(core_capacities, by = join_by(capacity_original == core_capacity_original)) |>
   left_join(currency_conversions, by = join_by(currency_original == currency_original)) |>
-  mutate(cost_usd2024 = cost_original*currency_multiplier)
+  mutate(cost_usd2024 = cost_original_numeric*currency_multiplier)
+
+###########################################################################
+## Create unique ID for each line #########################################
+###########################################################################
+
+## create unique ID for each row
+updated_raw_data$line_item_id <- 1:nrow(updated_raw_data)
 
 ###########################################################################
 ## Export clean dataset ###################################################
@@ -88,8 +95,26 @@ updated_raw_data <- raw_data |>
 ## I would prefer this to be open-source, though I suspect
 ## Excel may be easier for some users. Also save duplicate pipe-delimited file.
 
-write_xlsx(updated_raw_data[, c(1,13,14,2,10,11,5,6,12,8,19,9)], 
-           path = here("data", "clean", "Clean Costed NAPHS data.xlsx"),
+## create dataset used to manually review for tags
+export_no_tags <- updated_raw_data[, c(20, 1, 2, 14, 10, 11)]
+
+# export data for tagging (one line item can have many tags)
+## commented out and changed file name, don't run (contains interim tagging work)
+## THIS FILE CONTAINS MANUAL WORK/TAGGING STEP
+# write_xlsx(export_no_tags,
+#            path = here("data", "interim", "XXXXXLine Item TagsXXXXX.xlsx"),
+#            col_names = TRUE, format_headers = FALSE)
+
+# export data for primary categorization (one line item belongs to one single category)
+## commented out and changed file name, don't run (contains interim tagging work)
+## THIS FILE CONTAINS MANUAL WORK/TAGGING STEP
+# write_xlsx(export_no_tags,
+#            path = here("data", "interim", "XXXXXLine Item CategoriesXXXXX.xlsx"),
+#            col_names = TRUE, format_headers = FALSE)
+
+# export complete data
+write_xlsx(updated_raw_data[, c(20, 1, 13, 14, 10, 11, 6, 5, 19, 2, 3, 4, 7, 8)],
+           path = here("data", "interim", "Interim Line Items.xlsx"),
            col_names = TRUE, format_headers = FALSE)
 
 ###########################################################################

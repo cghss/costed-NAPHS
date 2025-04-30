@@ -11,18 +11,18 @@ library(readxl) ## to read in Excel files
 library(writexl) ## to save Excel files
 library(dplyr) ## for data manipulation
 library(here) ## for file path management
-library(treemapify) ## for treemaps
 
 ## these packages are needed for the exploratory analysis code below
 library(ggplot2) ## for making figures
 library(treemapify) ## for treemaps
 library(stringr) ## for string wrapping
+library(viridis) ## for colors
 
 ###########################################################################
 ## Specify filepath info ##################################################
 ###########################################################################
 
-here::i_am("code/2_exploratory_analysis.R")
+here::i_am("code/3_exploratory_analysis.R")
 
 ####################################################################################################
 ## Run code in other file to clean data ############################################################
@@ -30,22 +30,21 @@ here::i_am("code/2_exploratory_analysis.R")
 ####################################################################################################
 
 source(here("code", "1_data_cleaning.R"))
+source(here("code", "2_add_tags.R"))
 
 ####################################################################################################
 ## Read in clean data ##############################################################################
 ####################################################################################################
 
 ## read in cleaned data
-line_items <- read_excel(here("data", "clean", "Clean Costed NAPHS data.xlsx"))
-specified_labels <- read.table(here("data", "raw", "requirement_highlights.txt"),
-                               sep = "\t", header = TRUE)
+line_items <- read_excel(here("data", "clean", "Costed NAPHS data.xlsx"),
+                         col_types = "guess")
 
 ####################################################################################################
 ## Manage data types within R ######################################################################
 ####################################################################################################
 
 ## mange numeric variables
-line_items$cost_original <- as.numeric(line_items$cost_original)
 line_items$cost_usd2024 <- as.numeric(line_items$cost_usd2024)
 
 ## country becomes a factor sorted by higheset to lowest total costs, at least to start
@@ -124,6 +123,106 @@ other_colors <- c(
 cc_colors <- c(prevent_colors, detect_colors, respond_colors, other_colors)
 
 ####################################################################################################
+## For each country, what is the most expensive core capacity? #####################################
+####################################################################################################
+
+line_items |>
+  group_by(country_factor, pillar, core_capacity_mapped) |>
+  summarize(total_capacity_cost = sum(cost_usd2024, na.rm = TRUE)) |>
+  group_by(country_factor) |>
+  arrange(desc(total_capacity_cost), .by_group = TRUE) |>
+  mutate(rank = row_number()) |>
+  filter(rank <= 3) |>
+  print(n = 100)
+
+# Create equal-size country data with pillar grouping
+line_items_equal_countries_cc <- line_items |>
+  group_by(country_factor, pillar, core_capacity_mapped) |>
+  summarize(total_capacity_cost = sum(cost_usd2024, na.rm = TRUE), .groups = "drop") |>
+  group_by(country_factor) |>
+  mutate(
+    proportion = total_capacity_cost / sum(total_capacity_cost),
+    country_area = 1) |>
+  mutate(area = proportion * country_area)
+
+# Create the treemap with equal-sized countries and pillar grouping
+ggplot(line_items_equal_countries_cc, 
+       aes(area = area, 
+           fill = core_capacity_mapped, 
+           subgroup = country_factor,
+           subgroup2 = pillar)) + 
+  geom_treemap() +
+  geom_treemap_subgroup2_border(color = "white", size = 0.5) + # Lighter border around pillars
+  geom_treemap_subgroup_border(color = "white", size = 2) + # White border around countries
+  geom_treemap_subgroup_text(place = "center", 
+                             color = "black",
+                             fontface = "bold",
+                             size = 14,
+                             min.size = 0) +
+  facet_wrap(~ country_factor, ncol = 3) +  
+  scale_fill_manual(values = cc_colors) +
+  labs(
+    title = "Proportional Health Security Capacity-Building Costs by Country",
+    subtitle = "Area within each country represents proportion of costs, grouped by pillar") +
+  theme_minimal() +
+  theme(
+    text = element_text(colour = "gray5", family = "Barlow"),
+    legend.position = "none",
+    strip.background = element_blank(),
+    strip.text = element_blank()  # Hide facet labels since we have them in the treemap
+  )
+
+
+####################################################################################################
+## For each country, what types of costs are the most expensive? ###################################
+####################################################################################################
+
+line_items |>
+  group_by(country_factor, primary_category, primary_subcategory) |>
+  summarize(total_capacity_cost = sum(cost_usd2024, na.rm = TRUE)) |>
+  group_by(country_factor) |>
+  arrange(desc(total_capacity_cost), .by_group = TRUE) |>
+  mutate(rank = row_number()) |>
+  filter(rank <= 3) |>
+  print(n = 100)
+
+line_items_equal_countries_cat <- line_items |>
+  group_by(country_factor, primary_category, primary_subcategory) |>
+  summarize(total_capacity_cost = sum(cost_usd2024, na.rm = TRUE), .groups = "drop") |>
+  group_by(country_factor) |>
+  mutate(
+    proportion = total_capacity_cost / sum(total_capacity_cost),
+    country_area = 1) |>
+  mutate(area = proportion * country_area)
+
+# Create the treemap with equal-sized countries and pillar grouping
+ggplot(line_items_equal_countries_cat, 
+       aes(area = area, 
+           fill = primary_subcategory, 
+           subgroup = country_factor,
+           subgroup2 = primary_category)) + 
+  geom_treemap() +
+  geom_treemap_subgroup2_border(color = "white", size = 0.5) + # Lighter border around pillars
+  geom_treemap_subgroup_border(color = "white", size = 2) + # White border around countries
+  geom_treemap_subgroup_text(place = "center", 
+                             color = "black",
+                             fontface = "bold",
+                             size = 14,
+                             min.size = 0) +
+  facet_wrap(~ country_factor, ncol = 3) +  
+  #scale_fill_manual(values = cc_colors) +
+  labs(
+    title = "Proportional Health Security Capacity-Building Costs by Country",
+    subtitle = "Area within each country represents proportion of costs, grouped by cost category") +
+  theme_minimal() +
+  theme(
+    text = element_text(colour = "gray5", family = "Barlow"),
+    legend.position = "none",
+    strip.background = element_blank(),
+    strip.text = element_blank()  # Hide facet labels since we have them in the treemap
+  )
+
+####################################################################################################
 ## Question: What are the overall costs, per country and core capacity? ############################
 ####################################################################################################
 
@@ -172,60 +271,6 @@ line_items |>
     strip.text = element_text(face = "bold", size = 10),
     axis.text.x = element_text(angle = 45, hjust = 1)
   )
-
-####################################################################################################
-## Question: What are the most expensive individual actions, per country? ##########################
-####################################################################################################
-
-top_3_by_country <- line_items |>
-  left_join(specified_labels, join_by(requirement == requirement)) |>
-  group_by(country_factor, pillar, core_capacity_mapped, requirement, brief_label) |>
-  summarize(total_cost = sum(cost_usd2024, na.rm = TRUE), .groups = "drop") |>
-  group_by(country_factor) |>
-  arrange(desc(total_cost), .by_group = TRUE) |>
-  mutate(rank = row_number()) |>
-  mutate(is_top_3 = rank <= 3) |>
-  ungroup()
-
-pillar_colors <- c(
-  "Prevent" = "#158A4A",
-  "Detect" = "#FFD12E",
-  "Respond" = "#E67E3A",
-  "Other" = "#667A8C")
-
-# Ensure your plot uses the pillar column for coloring
-ggplot(top_3_by_country, aes(x = total_cost, y = country_factor, color = pillar)) +
-  # Horizontal lines
-  geom_segment(aes(x = 0, xend = max(total_cost) * 1.1, 
-                   y = country_factor, yend = country_factor),
-               color = "gray90", size = 0.8) +
-  # Background points with low opacity
-  geom_point(alpha = 0.1, size = 2) +
-  # Top 3 points highlighted
-  geom_point(data = filter(top_3_by_country, is_top_3 == TRUE), 
-             aes(fill = pillar), size = 4) +
-  # Labels for top 3, positioned above dots with colors and wrapped text
-  geom_text(data = filter(top_3_by_country, is_top_3 == TRUE), 
-            aes(label = str_wrap(brief_label, width = 20), color = pillar),
-            vjust = -0.8, family = "Barlow", size = 3) +
-  # Apply the pillar color palette
-  scale_color_manual(values = pillar_colors) +
-  # X-axis formatting
-  scale_x_log10(labels = scales::label_number(prefix = "$", scale_cut = scales::cut_short_scale()),
-                     expand = expansion(mult = c(0, 0.25))) +
-  # Labels and theme
-  labs(
-    title = "Top Health Security Investments by Country",
-    subtitle = "Highlighting the 3 most expensive capacity areas for each country",
-    x = "Cost (2024 USD)",
-    y = "",
-    color = "") +
-  theme_minimal() +
-  theme(
-    text = element_text(colour = "gray5", family = "Barlow"),
-    panel.grid.major.y = element_blank(),
-    panel.grid.minor = element_blank(),
-    legend.position = "none")
 
 ####################################################################################################
 ## Appendix: Additional/rejected figure ideas ######################################################
@@ -280,7 +325,7 @@ line_items |>
   geom_tile(color = "white", linewidth = 0.1) +
   scale_fill_viridis(
     name = "Cost (2024 USD)",
-    option = "viridis", 
+    option = "viridis",
     trans = "log10", # Log scale helps with data that varies widely
     labels = scales::label_number(prefix = "$", scale_cut = scales::cut_short_scale()),
     guide = guide_colorbar(title.position = "top", barwidth = 10)) +
@@ -328,47 +373,3 @@ line_items |>
   )
 
 
-####################################################################################################
-## For each country, what % of funding requirements come from each core capacity? ##################
-####################################################################################################
-
-
-# Create equal-size country data with pillar grouping
-line_items_equal_countries <- line_items |>
-  group_by(country_factor, pillar, core_capacity_mapped) |>
-  summarize(total_capacity_cost = sum(cost_usd2024, na.rm = TRUE), .groups = "drop") |>
-  group_by(country_factor) |>
-  mutate(
-    proportion = total_capacity_cost / sum(total_capacity_cost),
-    country_area = 1) |>
-  mutate(area = proportion * country_area)
-
-
-# Create the treemap with equal-sized countries and pillar grouping
-ggplot(line_items_equal_countries, 
-       aes(area = area, 
-           fill = core_capacity_mapped, 
-           subgroup = country_factor,
-           subgroup2 = pillar)) + # Add second grouping level by pillar
-  geom_treemap() +
-  geom_treemap_subgroup2_border(color = "white", size = 0.5) + # Lighter border around pillars
-  geom_treemap_subgroup_border(color = "white", size = 2) + # White border around countries
-  geom_treemap_subgroup_text(aes(label = country_factor), 
-                             place = "center", 
-                             color = "black",
-                             fontface = "bold",
-                             size = 14,
-                             min.size = 0) +
-  facet_wrap(~ country_factor, ncol = 3) +  # Create a separate panel for each country
-  scale_fill_manual(values = cc_colors) +
-  labs(
-    title = "Proportional Health Security Capacity-Building Costs by Country",
-    subtitle = "Area within each country represents proportion of costs, grouped by pillar"
-  ) +
-  theme_minimal() +
-  theme(
-    text = element_text(colour = "gray5", family = "Barlow"),
-    legend.position = "none",
-    strip.background = element_blank(),
-    strip.text = element_blank()  # Hide facet labels since we have them in the treemap
-  )
