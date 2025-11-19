@@ -1,8 +1,0 @@
-country	requirement	brief_label
-Sierra Leone	Strengthen  Community-based  surveillance system in  context of OneHealth	Community-based One Health surveillance
-Sierra Leone	"Strengthen AEFI  montoring, reporting  and investigation"	Adverse Events Following Immunization program
-Sierra Leone	Develop RED/REC  plan in every health  facility	Planning to expand immunization coverage  
- Myanmar	Regular supply and maintainace of laboratory equipment and reagents.	Laboratory supplies
- Myanmar	Implement Cold Chain Expansion and Improvement Plan	Cold chain
-Liberia	Develop skilled and competent health workforce for effective implementation of IHR (2005) under One Health Approach	Health workforce
-Liberia	Strengthen capacity for IDSR and eIDSR implementation at all levels under one health platform	Integrated Disease Surveillance and Response
