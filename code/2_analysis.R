@@ -2,13 +2,10 @@
 ## Load required libraries ################################################
 ###########################################################################
 
-## these packages are needed needed to run the script 1_data_cleaning.R
-
 ## if you don't already have these installed, you'll need to install them
 ## using the command install.libraries()
 
 library(readxl) ## to read in Excel files
-library(writexl) ## to save Excel files
 library(dplyr) ## for data manipulation
 library(here) ## for file path management
 
@@ -22,32 +19,24 @@ library(viridis) ## for colors
 ## Specify filepath info ##################################################
 ###########################################################################
 
-here::i_am("code/3_exploratory_analysis.R")
-
-####################################################################################################
-## Run code in other file to clean data ############################################################
-## NOTE: this will remove any other files you have stored in your filepath when it runs ############
-####################################################################################################
-
-source(here("code", "1_data_cleaning.R"))
-source(here("code", "2_add_tags.R"))
+here::i_am("code/analysis.R")
 
 ####################################################################################################
 ## Read in clean data ##############################################################################
 ####################################################################################################
 
 ## read in cleaned data
-line_items <- read_excel(here("data", "clean", "Costed NAPHS data.xlsx"),
+line_items <- read_excel(here("data", "Line item data.xlsx"),
                          col_types = "guess")
 
 ####################################################################################################
 ## Manage data types within R ######################################################################
 ####################################################################################################
 
-## mange numeric variables
+## manage numeric variables
 line_items$cost_usd2024 <- as.numeric(line_items$cost_usd2024)
 
-## country becomes a factor sorted by higheset to lowest total costs, at least to start
+## country becomes a factor sorted by highest to lowest total costs, at least to start
 line_items$country_factor <- factor(line_items$country,
                                     levels = c("Sierra Leone",
                                                "Myanmar",
