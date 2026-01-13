@@ -15,7 +15,7 @@ Prevent	Antimicrobial Resistance	P.4 Antimicrobial Resistance (AMR)
 Prevent	Antimicrobial Resistance	Anti-Microbial Resistance
 Prevent	Zoonotic Disease	P.4 Zoonotic Disease
 Prevent	Zoonotic Disease	P.5 Zoonotic Disease
-Prevent	Zoonotic Disease	Zoonotic events and the human–animal interface
+Prevent	Zoonotic Disease	Zoonotic events and the human-animal interface
 Prevent	Food Safety	P.5 Food Safety
 Prevent	Food Safety	P.6 Food Safety
 Prevent	Biosafety and Biosecurity	P.6 Biosafety and Biosecurity

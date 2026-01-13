@@ -64,7 +64,6 @@ line_items_clean <- line_items_raw |>
   mutate(cost_usd2024 = cost_original_numeric*currency_multiplier,
          capacity = coalesce(core_capacity, capacity_original))
 
-## TODO: look into issue with Zoonotic events and the human–animal interface
 summary_costs_clean <- summary_costs_raw |>
   left_join(core_capacity_mapping, by = join_by(cost_observation_details == core_capacity_original)) |>
   left_join(currency_conversions, by = join_by(currency_original == currency_original)) |>
