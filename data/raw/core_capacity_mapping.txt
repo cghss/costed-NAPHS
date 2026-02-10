@@ -3,55 +3,79 @@ Prevent	"National Legislation, Policy and Financing"	"P.1 National Legislation, 
 Prevent	"National Legislation, Policy and Financing"	P1. Legal Instruments
 Prevent	"National Legislation, Policy and Financing"	National Legislation
 Prevent	"National Legislation, Policy and Financing"	National Legislation and Financing
+Prevent	"National Legislation, Policy and Financing"	Legislation and Financing
+Prevent	"National Legislation, Policy and Financing"	"National Legislation, Policy and Financing"
 Prevent	IHR Coordination	"P.2 IHR Coordination, Communication and Advocacy"
 Prevent	IHR Coordination	P.2 IHR Coordination Communication and Advocacy
 Prevent	IHR Coordination	"P.3 IHR Coordination, National IHR Focal Point Functions and Advocacy"
 Prevent	IHR Coordination	IHR Coordination and National IHR Focal Point Functions
 Prevent	IHR Coordination	"IHR Coordination, Communication and Advocacy"
 Prevent	IHR Coordination	IHR Coordination Communication and Advocacy
+Prevent	IHR Coordination	IHR Coordination
 Prevent	Antimicrobial Resistance	P.3 Antimicrobial Resistance
 Prevent	Antimicrobial Resistance	P.3 Anti-Microbial Resistance
 Prevent	Antimicrobial Resistance	P.4 Antimicrobial Resistance (AMR)
 Prevent	Antimicrobial Resistance	Anti-Microbial Resistance
+Prevent	Antimicrobial Resistance	Antimicrobial Resistance
+Prevent	Antimicrobial Resistance	R.4 Infection Prevention and Control
 Prevent	Zoonotic Disease	P.4 Zoonotic Disease
 Prevent	Zoonotic Disease	P.5 Zoonotic Disease
 Prevent	Zoonotic Disease	Zoonotic events and the human-animal interface
+Prevent	Zoonotic Disease	Zoonotic Disease
 Prevent	Food Safety	P.5 Food Safety
 Prevent	Food Safety	P.6 Food Safety
+Prevent	Food Safety	Food Safety
 Prevent	Biosafety and Biosecurity	P.6 Biosafety and Biosecurity
 Prevent	Biosafety and Biosecurity	P.7 Biosafety and Biosecurity
+Prevent	Biosafety and Biosecurity	Biosafety and Biosecurity
 Prevent	Immunization	P.7 Immunization
 Prevent	Immunization	P.8 Immunization
 Prevent	Immunization	Immunizations
+Prevent	Immunization	Immunization
 Detect	National Laboratory System	D.1 National Laboratory System
+Detect	National Laboratory System	National Laboratory System
 Detect	Surveillance	D.2 Real-time Surveillance
 Detect	Surveillance	Real Time Surveillance
 Detect	Surveillance	D.2 Surveillance
 Detect	Surveillance	D.2 Real Time Surveillance
+Detect	Surveillance	Real-Time Surveillance
+Detect	Surveillance	Surveillance
 Detect	Reporting	D.3 Reporting
+Detect	Reporting	Reporting
 Detect	Workforce	D.4 Workforce Development
 Detect	Workforce	Workforce Development
 Detect	Workforce	D.3 Human Resources
 Detect	Workforce	Human Resources
 Detect	Workforce	Human Resources/Workforce Development
+Detect	Workforce	Human Resoures (Animal and human health sector)
+Detect	Workforce	Workforce
 Respond	Preparedness	R.1 Preparedness
 Respond	Preparedness	Emergency Preparedness
+Respond	Preparedness	Preparedness
 Respond	Emergency Response Operations	R.2 Emergency Response Operations
 Respond	Emergency Response Operations	R.1 Health Emergency Management
 Respond	Emergency Response Operations	Emergency response operation
+Respond	Emergency Response Operations	Emergency Response Operations
 Respond	Linking Public Health and Security Authorities	R.3 Linking Public Health and Security Authorities
 Respond	Linking Public Health and Security Authorities	R.2 Linking Public Health and Security Authorities
 Respond	Linking Public Health and Security Authorities	Linking Public Health with Security Authorities
+Respond	Linking Public Health and Security Authorities	Linking Public Health and Security Authorities
 Respond	Medical Countermeasures and Personnel Deployment	R.4 Medical Countermeasures and Personnel Deployment
 Respond	Medical Countermeasures and Personnel Deployment	Medical Counter measures and Personnel Deployment
 Respond	Medical Countermeasures and Personnel Deployment	Medical countermeasures
-Respond	Antimicrobial Resistance	R.4 Infection Prevention and Control
+Respond	Medical Countermeasures and Personnel Deployment	Medical Countermeasures
+Respond	Medical Countermeasures and Personnel Deployment	Medical Countermeasures and Personnel Deployment
 Respond	Risk Communication	R.5 Risk Communication
 Respond	Risk Communication	R.5 Risk Communication and Community Engagement
+Respond	Risk Communication	Risk Communication
 Other	Points of Entry	PoE: Points of Entry
 Other	Points of Entry	PoE: Points of Entry and Border Health
 Other	Points of Entry	Points of Entry (PoE)
+Other	Points of Entry	Events Points of Entry (PoEs)
+Other	Points of Entry	Points of Entry
 Other	Chemical Events	CE: Chemical Events
+Other	Chemical Events	Chemical Events
 Other	Radiation Emergencies	RE: Radiation Emergencies
 Other	Radiation Emergencies	Radiation Events
+Other	Radiation Emergencies	Radiation Emergencies
 Overall	total	total
