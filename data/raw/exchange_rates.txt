@@ -8,5 +8,7 @@ UGX (2019)	USD (2024)	0.00033607	"US Department of Treasury. Fiscal Data, Treasu
 USD (2017)	USD (2024)	1.28	"US Bureau of Labor Statistics. CPI Inflation Calculator. https://www.bls.gov/data/inflation_calculator.htm. Accessed 23 April, 2025."	Based on CPI data as of December 2017 and 2024.
 USD (2018)	USD (2024)	1.26	"US Bureau of Labor Statistics. CPI Inflation Calculator. https://www.bls.gov/data/inflation_calculator.htm. Accessed 23 April, 2025."	Based on CPI data as of December 2018 and 2024.
 USD (2019)	USD (2024)	1.23	"US Bureau of Labor Statistics. CPI Inflation Calculator. https://www.bls.gov/data/inflation_calculator.htm. Accessed 23 April, 2025."	Based on CPI data as of December 2019 and 2024.
-USD (2020)	USD (2024)	1.11	"US Bureau of Labor Statistics. CPI Inflation Calculator. https://www.bls.gov/data/inflation_calculator.htm. Accessed 23 April, 2025."	Based on CPI data as of December 2020 and 2024.
+USD (2020)	USD (2024)	1.21	"US Bureau of Labor Statistics. CPI Inflation Calculator. https://www.bls.gov/data/inflation_calculator.htm. Accessed 23 April, 2025."	Based on CPI data as of December 2020 and 2024.
+USD (2021)	USD (2024)	1.13	"US Bureau of Labor Statistics. CPI Inflation Calculator. https://www.bls.gov/data/inflation_calculator.htm. Accessed 23 April, 2025."	Based on CPI data as of December 2021 and 2024.
 USD (2023)	USD (2024)	1.03	"US Bureau of Labor Statistics. CPI Inflation Calculator. https://www.bls.gov/data/inflation_calculator.htm. Accessed 9 February, 2026."	Based on CPI data as of December 2023 and 2024.
+USD (2024)	USD (2024)	1		
