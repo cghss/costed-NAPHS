@@ -9,3 +9,5 @@ This repository contains publicly available data on costed National Action Plans
 **Documentation:** Contains assorted documentation, including the guidelines for data extraction from the original costed NAPHS PDF files.
 
 **Results:** Contains results of analyses, including both summary tables and figures.
+
+Costing Preparedness: a comparative analysis to standardize cost estimate data from National Action Plans for Health Security (NAPHS) © 2026 by Stephanie Eaneff, Michelle Wong, Ciara Weets, and Rebecca Katz is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/ 
