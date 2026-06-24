@@ -257,7 +257,11 @@ p_title <- ggplot() +
 figure_1 <- p_title / p_main + plot_layout(heights = c(2, 25))
 
 showtext_opts(dpi = 300)
+
 ggsave(here("results", "figure 1.png"), plot = figure_1,
+       width = 9, height = 6.5, units = "in", dpi = 300, bg = "white")
+
+ggsave(here("results", "figure 1.jpeg"), plot = figure_1,
        width = 9, height = 6.5, units = "in", dpi = 300, bg = "white")
 
 ####################################################################################################
@@ -325,6 +329,10 @@ figure_2 <- ggplot(category_bar_data,
 figure_2
 
 showtext_opts(dpi = 300)
+
+ggsave(here("results", "figure 2.png"), plot = figure_2,
+       width = 6, height = 4, units = "in", dpi = 300, bg = "white")
+
 ggsave(here("results", "figure 2.png"), plot = figure_2,
        width = 6, height = 4, units = "in", dpi = 300, bg = "white")
 
